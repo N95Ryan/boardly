@@ -1,5 +1,4 @@
 import React from "react";
-import Link from "next/link";
 import Image from "next/image";
 import logo from "@/assets/logo.png";
 import flyOutIcon from "@/assets/flyOutButton.png";
@@ -33,7 +32,7 @@ export default function Sidebar({
     >
       <div className="flex h-16 items-center justify-between gap-2 px-4">
         {!isCollapsed && (
-          <Link href="/" className="flex items-center gap-2">
+          <div className="flex items-center gap-2">
             <Image
               src={logo}
               alt="Project M logo"
@@ -44,7 +43,7 @@ export default function Sidebar({
             <span className="text-base font-semibold text-neutral-900">
               Project M.
             </span>
-          </Link>
+          </div>
         )}
         <button
           type="button"
@@ -65,41 +64,41 @@ export default function Sidebar({
       </div>
       {!isCollapsed && (
         <nav className="flex flex-col gap-1 px-2 py-2 text-sm">
-          <Link
-            href="/"
+          <button
+            type="button"
             className={`flex items-center rounded-md px-3 py-2 text-neutral-700 hover:bg-neutral-100 ${isCollapsed ? "justify-center" : "gap-2"}`}
           >
             <Home className="h-4 w-4" />
             <span className={isCollapsed ? "hidden" : "inline"}>Home</span>
-          </Link>
-          <Link
-            href="/"
+          </button>
+          <button
+            type="button"
             className={`flex items-center rounded-md px-3 py-2 text-neutral-700 hover:bg-neutral-100 ${isCollapsed ? "justify-center" : "gap-2"}`}
           >
             <MessageSquare className="h-4 w-4" />
             <span className={isCollapsed ? "hidden" : "inline"}>Messages</span>
-          </Link>
-          <Link
-            href="/"
+          </button>
+          <button
+            type="button"
             className={`flex items-center rounded-md px-3 py-2 text-neutral-700 hover:bg-neutral-100 ${isCollapsed ? "justify-center" : "gap-2"}`}
           >
             <ListTodo className="h-4 w-4" />
             <span className={isCollapsed ? "hidden" : "inline"}>Tasks</span>
-          </Link>
-          <Link
-            href="/"
+          </button>
+          <button
+            type="button"
             className={`flex items-center rounded-md px-3 py-2 text-neutral-700 hover:bg-neutral-100 ${isCollapsed ? "justify-center" : "gap-2"}`}
           >
             <Users2 className="h-4 w-4" />
             <span className={isCollapsed ? "hidden" : "inline"}>Members</span>
-          </Link>
-          <Link
-            href="/settings"
+          </button>
+          <button
+            type="button"
             className={`flex items-center rounded-md px-3 py-2 text-neutral-700 hover:bg-neutral-100 ${isCollapsed ? "justify-center" : "gap-2"}`}
           >
             <Settings className="h-4 w-4" />
             <span className={isCollapsed ? "hidden" : "inline"}>Settings</span>
-          </Link>
+          </button>
         </nav>
       )}
 
@@ -110,41 +109,42 @@ export default function Sidebar({
             <ChevronRight className="h-3.5 w-3.5" />
           </div>
           <div className="space-y-1">
-            <Link
-              href="/"
+            <button
+              type="button"
               className="flex items-center justify-between rounded-md px-3 py-2 text-sm text-neutral-900 ring-1 ring-neutral-200 hover:bg-neutral-50"
             >
               <span className="flex items-center gap-2">
-                <span className="h-2 w-2 rounded-full bg-violet-500" /> Mobile
+                <span className="h-2 w-2 rounded-full bg-[#7ac555]" /> Mobile
                 App
               </span>
-            </Link>
-            <Link
-              href="/"
+            </button>
+            <button
+              type="button"
               className="flex items-center justify-between rounded-md px-3 py-2 text-sm text-neutral-700 hover:bg-neutral-100"
             >
               <span className="flex items-center gap-2">
-                <span className="h-2 w-2 rounded-full bg-orange-400" /> Website
+                <span className="h-2 w-2 rounded-full bg-[#ffa500]" /> Website
                 Redesign
               </span>
-            </Link>
-            <Link
-              href="/"
+            </button>
+            <button
+              type="button"
               className="flex items-center justify-between rounded-md px-3 py-2 text-sm text-neutral-700 hover:bg-neutral-100"
             >
               <span className="flex items-center gap-2">
-                <span className="h-2 w-2 rounded-full bg-emerald-500" /> Design
+                <span className="h-2 w-2 rounded-full bg-[#e4ccfd]" /> Design
                 System
               </span>
-            </Link>
-            <Link
-              href="/"
+            </button>
+            <button
+              type="button"
               className="flex items-center justify-between rounded-md px-3 py-2 text-sm text-neutral-700 hover:bg-neutral-100"
             >
               <span className="flex items-center gap-2">
-                <span className="h-2 w-2 rounded-full bg-sky-500" /> Wireframes
+                <span className="h-2 w-2 rounded-full bg-[#76a5ea]" />{" "}
+                Wireframes
               </span>
-            </Link>
+            </button>
           </div>
 
           <div className="mt-6 rounded-xl border border-neutral-200 bg-white p-4 text-center shadow-sm">
