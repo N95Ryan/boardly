@@ -7,7 +7,7 @@ export default function Navbar() {
     <header className="sticky top-0 z-30 h-14 w-full border-b border-neutral-200 bg-white/80 backdrop-blur supports-[backdrop-filter]:bg-white/60 dark:border-neutral-800 dark:bg-neutral-950/70">
       <div className="mx-auto flex h-full w-full max-w-7xl items-center justify-between px-4">
         <h1 className="text-sm font-semibold tracking-tight text-neutral-900 dark:text-neutral-100">
-          Panda Dashboard
+          Panda Hub - Dashboard
         </h1>
         <nav className="flex items-center gap-3">
           <button

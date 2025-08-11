@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { BoardData, Column, Task } from '@/lib/types';
+import { BoardData } from '@/lib/types';
 import { initialBoardData } from '@/lib/data';
 
 type KanbanState = {

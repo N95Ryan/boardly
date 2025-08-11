@@ -1,4 +1,5 @@
 import React from "react";
+import Head from "next/head";
 import Layout from "@/layout/Layout";
 import Stats from "@/dashboard/Stats";
 import KanbanBoard from "@/dashboard/KanbanBoard";
@@ -7,9 +8,14 @@ import KanbanBoard from "@/dashboard/KanbanBoard";
 // a header section for quick stats and a main Kanban board area.
 export default function HomePage() {
   return (
-    <Layout>
-      <Stats />
-      <KanbanBoard />
-    </Layout>
+    <>
+      <Head>
+        <title>Panda Hub - Dashboard</title>
+      </Head>
+      <Layout>
+        <Stats />
+        <KanbanBoard />
+      </Layout>
+    </>
   );
 }
