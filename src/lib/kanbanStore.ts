@@ -1,11 +1,12 @@
 import { create } from 'zustand';
-import { BoardData, ProjectKey } from '@/lib/types';
+import { BoardData, ProjectKey, UserAvatar } from '@/lib/types';
 import { initialBoardData, initialProjectBoards } from '@/lib/data';
-import { fetchBoardDataFromDummyJSON } from '@/lib/dummyjson';
+import { fetchAvatarsFromDummyJSON, fetchBoardDataFromDummyJSON } from '@/lib/dummyjson';
 
 type KanbanState = {
   board: BoardData;
   currentProject: ProjectKey;
+  participants: UserAvatar[];
   moveTask: (taskId: string, fromColumnId: string, toColumnId: string, toIndex: number) => void;
   reorderTask: (columnId: string, fromIndex: number, toIndex: number) => void;
   /**
@@ -30,6 +31,7 @@ type KanbanState = {
 export const useKanbanStore = create<KanbanState>((set, get) => ({
   board: initialBoardData,
   currentProject: 'mobile-app',
+  participants: [],
   // Keep the active filter in the store so it persists across navigation
   statusFilter: 'all',
   setStatusFilter: (filter) => set({ statusFilter: filter }),
@@ -44,8 +46,30 @@ export const useKanbanStore = create<KanbanState>((set, get) => ({
     if (hasHydratedFromAPI || isLoadingFromAPI) return;
     set({ isLoadingFromAPI: true, error: null });
     try {
-      const remote = await fetchBoardDataFromDummyJSON();
-      set({ board: remote, hasHydratedFromAPI: true, isLoadingFromAPI: false });
+      const [remote, avatars] = await Promise.all([
+        (async () => {
+          const project = get().currentProject;
+          const offsetMap: Record<ProjectKey, number> = {
+            'mobile-app': 0,
+            'website-redesign': 50,
+            'design-system': 100,
+            'wireframes': 150,
+          };
+          return fetchBoardDataFromDummyJSON(offsetMap[project] ?? 0, 30);
+        })(),
+        // Offset avatars by project so each project gets a different cohort
+        (async () => {
+          const project = get().currentProject;
+          const offsetMap: Record<ProjectKey, number> = {
+            'mobile-app': 0,
+            'website-redesign': 10,
+            'design-system': 20,
+            'wireframes': 30,
+          };
+          return fetchAvatarsFromDummyJSON(offsetMap[project] ?? 0, 6);
+        })(),
+      ]);
+      set({ board: remote, participants: avatars, hasHydratedFromAPI: true, isLoadingFromAPI: false });
     } catch (err) {
       // Keep local data and expose a minimal error string for potential UI hooks
       const message = err instanceof Error ? err.message : 'Unknown error';
@@ -61,6 +85,7 @@ export const useKanbanStore = create<KanbanState>((set, get) => ({
     set({
       currentProject: project,
       board: seed,
+      participants: [],
       statusFilter: 'all',
       // Reset API hydration for a fresh experience per project
       hasHydratedFromAPI: false,

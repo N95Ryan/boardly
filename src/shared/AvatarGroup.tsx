@@ -10,7 +10,7 @@ type AvatarGroupProps = {
 // Overlapping avatars with a +N counter.
 export default function AvatarGroup({
   users,
-  size = 28,
+  size = "md",
   max = 4,
 }: AvatarGroupProps) {
   const visible = users.slice(0, max);

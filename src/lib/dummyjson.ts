@@ -1,4 +1,4 @@
-import { BoardData, Task } from "@/lib/types";
+import { BoardData, Task, UserAvatar } from "@/lib/types";
 import axios from "axios";
 
 /**
@@ -6,10 +6,10 @@ import axios from "axios";
  * We split tasks into three columns based on completion and a small portion
  * of pending tasks are marked as "in-progress" to make the board feel alive.
  */
-export async function fetchBoardDataFromDummyJSON(): Promise<BoardData> {
+export async function fetchBoardDataFromDummyJSON(offset = 0, limit = 30): Promise<BoardData> {
   const { data: json } = await axios.get<{
     todos: Array<{ id: number; todo: string; completed: boolean }>;
-  }>("https://dummyjson.com/todos", { params: { limit: 30 } });
+  }>("https://dummyjson.com/todos", { params: { limit, skip: offset } });
 
   // Map raw todos to our Task type. We also attach simple mock metrics.
   const allTasks: Task[] = json.todos.map((t) => ({
@@ -53,6 +53,23 @@ export async function fetchBoardDataFromDummyJSON(): Promise<BoardData> {
   };
 
   return board;
+}
+
+/**
+ * Fetches a small list of users from DummyJSON to be used as project participants.
+ * The offset parameter lets us vary users per project.
+ */
+export async function fetchAvatarsFromDummyJSON(offset = 0, limit = 6): Promise<UserAvatar[]> {
+  const { data } = await axios.get<{ users: Array<{ id: number; firstName: string; lastName: string; image?: string }> }>(
+    "https://dummyjson.com/users",
+    { params: { limit, skip: offset } }
+  );
+
+  return data.users.map((u) => ({
+    id: `u-${u.id}`,
+    name: `${u.firstName} ${u.lastName}`,
+    image: u.image,
+  }));
 }
 
 

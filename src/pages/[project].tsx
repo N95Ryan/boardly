@@ -21,6 +21,7 @@ export default function ProjectPage() {
   const switchProject = useKanbanStore((s) => s.switchProject);
   const current = useKanbanStore((s) => s.currentProject);
   const loadFromDummyJSON = useKanbanStore((s) => s.loadFromDummyJSON);
+  const participants = useKanbanStore((s) => s.participants);
   const statusFilter = useKanbanStore((s) => s.statusFilter);
   const setStatusFilter = useKanbanStore((s) => s.setStatusFilter);
   const isLoadingFromAPI = useKanbanStore((s) => s.isLoadingFromAPI);
@@ -66,7 +67,7 @@ export default function ProjectPage() {
   return (
     <>
       <Head>
-        <title>Panda Hub - {title}</title>
+        <title>Panda Dashboard - {title}</title>
       </Head>
       <Layout>
         <section className="mb-6">
@@ -78,13 +79,17 @@ export default function ProjectPage() {
               <div className="hidden items-center gap-3 md:flex">
                 <InviteButton />
                 <AvatarGroup
-                  users={[
-                    { id: "1", initials: "AM" },
-                    { id: "2", initials: "JD" },
-                    { id: "3", initials: "LS" },
-                    { id: "4", initials: "PK" },
-                    { id: "5", initials: "RB" },
-                  ]}
+                  users={participants.map((u) => ({
+                    id: u.id,
+                    src: u.image,
+                    alt: u.name,
+                    initials: u.name
+                      .split(" ")
+                      .map((p) => p[0])
+                      .join("")
+                      .slice(0, 2)
+                      .toUpperCase(),
+                  }))}
                 />
               </div>
               <div className="flex items-center gap-3">

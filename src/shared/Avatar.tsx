@@ -24,6 +24,7 @@ export default function Avatar({
     <div
       className={`inline-flex items-center justify-center overflow-hidden rounded-full bg-neutral-200 text-neutral-700 dark:bg-neutral-800 dark:text-neutral-300 ${sizeClass} ${className}`}
       aria-label={alt}
+      title={alt}
     >
       {src ? (
         // eslint-disable-next-line @next/next/no-img-element

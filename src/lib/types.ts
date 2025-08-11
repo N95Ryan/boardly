@@ -18,4 +18,13 @@ export type BoardData = {
 
 export type ProjectKey = 'mobile-app' | 'website-redesign' | 'design-system' | 'wireframes';
 
+export type UserAvatar = {
+  /** Stable id for UI lists */
+  id: string;
+  /** Full name for accessibility and initials generation */
+  name: string;
+  /** Remote image URL for the avatar (optional, can fallback to initials) */
+  image?: string;
+};
+
 
