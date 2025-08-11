@@ -1,57 +1,60 @@
 ## 🐼 Panda Dashboard
 
-Web application built for the Panda Hub technical test.
-Next.js dashboard with an interactive Kanban (drag-and-drop), responsive layout (Sidebar + Navbar), and simple, reusable UI components.
+Next.js web application (Pages Router) built for the Panda Hub technical test.
+Dashboard with an interactive Kanban (drag-and-drop), responsive layout (Sidebar + Navbar), and reusable UI components.
 
 ## 📋 Features
 
-- **Layout**: Sidebar, top navbar, and main content area
-- **Kanban**: Drag-and-drop across columns and in-column reordering
-- **State persistence**: Kanban state survives route changes via Zustand
-- **Mock data**: Initial dataset in `src/lib/data.ts`
-- **Stats component**: Simple metric cards in `src/dashboard/Stats.tsx`
-- **Pixel-perfect & Responsive**: Matches Figma design and adapts to various screen sizes
-- **Accessibility**: Semantic elements and ARIA attributes where needed
+- **Layout**: `Sidebar` + `Navbar`, responsive content area, mobile drawer.
+- **Kanban**: drag-and-drop across columns and in-column reordering via `@hello-pangea/dnd`.
+- **Filters**: built-in status filter (`all`, `todo`, `in-progress`, `done`).
+- **State persistence**: in-memory store with Zustand; state survives navigation.
+- **Data**: local seeds in `src/lib/data.ts` and hydration from DummyJSON (`src/lib/dummyjson.ts`).
+- **Projects**: routes `/mobile-app`, `/website-redesign`, `/design-system`, `/wireframes` (linked in the sidebar).
+- **Accessibility**: semantic structure and relevant ARIA attributes.
 
 ## 🛠 Tech Stack
 
-- **Framework**: [Next.js](https://nextjs.org/) 15
-- **UI**: [React](https://react.dev/) 19 + [TailwindCSS](https://tailwindcss.com/) 4
-- **Language**: [TypeScript](https://www.typescriptlang.org/)
-- **State Management**: [Zustand](https://github.com/pmndrs/zustand)
-- **Drag & Drop**: [`@hello-pangea/dnd`](https://github.com/hello-pangea/dnd)
-- **Linting**: ESLint + Next.js config
+- **Framework**: Next.js 15
+- **UI**: React 19 + TailwindCSS 4
+- **Language**: TypeScript
+- **State**: Zustand
+- **Drag & Drop**: `@hello-pangea/dnd`
+- **HTTP**: axios
+- **Icons**: lucide-react
+- **Lint**: ESLint + Next.js config
 
 ## 🚀 Getting Started
 
 ### Prerequisites
 
-- Node.js 18+ (20+ recommended)
+- Node.js 18+ (20 recommended)
 - npm (or pnpm/yarn/bun)
 
 ### Installation
 
 1. Clone the repository
 
-   ```bash
-   git clone <repository-url>
-   cd panda-dashboard
-   ```
+```bash
+git clone <repository-url>
+cd panda-dashboard
+```
 
 2. Install dependencies
 
-   ```bash
-   npm install
-   ```
+```bash
+npm install
+```
 
 3. Start the development server
 
-   ```bash
-   npm run dev
-   ```
+```bash
+npm run dev
+```
 
 4. Open the app
-   - Go to `http://localhost:3000`
+
+- Go to `http://localhost:3000` (redirects to `/mobile-app`).
 
 ### Useful scripts
 
@@ -67,26 +70,29 @@ npm run lint   # Lint the project
 ```
 src/
 ├── dashboard/
-│   ├── KanbanBoard.tsx     # Main board + drag-and-drop orchestration
-│   ├── KanbanColumn.tsx    # Kanban column (Droppable)
-│   ├── KanbanCard.tsx      # Task card (Draggable)
-│   └── Stats.tsx           # Simple stats cards
+│   ├── KanbanBoard.tsx     # Board orchestration + drag-and-drop
+│   ├── KanbanColumn.tsx    # Column (Droppable)
+│   └── KanbanCard.tsx      # Task card (Draggable)
 ├── layout/
 │   ├── Layout.tsx          # App shell (Sidebar + Navbar + main)
 │   ├── Navbar.tsx          # Top navigation bar
 │   └── Sidebar.tsx         # Side navigation
 ├── lib/
-│   ├── data.ts             # Initial Kanban data (mock)
-│   ├── kanbanStore.ts      # Zustand store (in-memory state)
-│   └── types.ts            # Interfaces/Types for the Kanban
+│   ├── data.ts             # Initial mock data
+│   ├── dummyjson.ts        # Hydration from the DummyJSON API
+│   ├── kanbanStore.ts      # Zustand store (Kanban state)
+│   ├── projects.ts         # Project labels and helpers
+│   └── types.ts            # Types/Interfaces (Task, Column, BoardData, ...)
 ├── pages/
 │   ├── _app.tsx            # Next.js entry (Pages Router)
-│   ├── index.tsx           # Home (Dashboard + Kanban)
-│   ├── projects.tsx        # Projects page (example)
-│   └── settings.tsx        # Settings page (example)
+│   ├── index.tsx           # Redirect to `/mobile-app`
+│   └── [project].tsx       # Dynamic project page
 ├── shared/
-│   ├── Button.tsx          # Reusable button
-│   └── Card.tsx            # Generic card component
+│   ├── Avatar.tsx          # Avatar
+│   ├── AvatarGroup.tsx     # Overlapping avatars group
+│   ├── Card.tsx            # Generic card component
+│   ├── InviteButton.tsx    # Invite button
+│   └── SearchBar.tsx       # Search input
 └── styles/
     └── globals.css         # Tailwind global styles
 ```
@@ -94,24 +100,30 @@ src/
 Architecture notes:
 
 - **Absolute imports** from `src/` (configured via `tsconfig.json`).
-- **TailwindCSS** for all styling (no inline styles, no CSS Modules).
+- **TailwindCSS** for all styling (no inline styles / CSS Modules).
 - **Functional components** in TypeScript, small and single-responsibility.
 
 ## 🎯 Kanban Details
 
-- **Types**: Defined in `src/lib/types.ts` (e.g., `BoardData`, `Column`, `Task`).
-- **Data**: `src/lib/data.ts` exports `initialBoardData` for initial render.
-- **Store**: `src/lib/kanbanStore.ts` manages state via Zustand and exposes:
-  - `moveTask(taskId, fromColumnId, toColumnId, toIndex)` to move a task across columns
-  - `reorderTask(columnId, fromIndex, toIndex)` to reorder within a column
-- **Drag & Drop**: `src/dashboard/KanbanBoard.tsx` wires `onDragEnd` to call `moveTask` or `reorderTask` via `@hello-pangea/dnd`.
-- **Accessibility**: The board is rendered inside `<section aria-label="Kanban Board">` with semantic structure.
+- **Types**: `src/lib/types.ts` (`BoardData`, `Column`, `Task`, etc.).
+- **Data**: `initialBoardData` in `src/lib/data.ts`.
+- **Store**: `src/lib/kanbanStore.ts` exposes:
+  - `moveTask(taskId, fromColumnId, toColumnId, toIndex)`
+  - `reorderTask(columnId, fromIndex, toIndex)`
+  - `loadFromDummyJSON()` (remote hydration, with participants)
+  - `switchProject(projectKey)` and `statusFilter` (+ `setStatusFilter`)
+- **Drag & Drop**: integrated in `src/dashboard/KanbanBoard.tsx` using `@hello-pangea/dnd`.
 
-## ✅ Practices Followed
+## 🧭 Project Navigation
 
-- **Performance**: Targeted imports, simple components; minimal global state.
-- **Readability**: Descriptive names, clear separation of responsibilities.
-- **Design**: Tailwind-aligned; responsive; spacing/typography per Figma.
+- Directly access: `/mobile-app`, `/website-redesign`, `/design-system`, `/wireframes`.
+- The sidebar contains links and the Kanban state persists between pages.
+
+## 🧩 Practices
+
+- **Readability**: descriptive names, simple components, clear responsibilities.
+- **Performance**: targeted imports, avoid unnecessary re-renders.
+- **Design**: matches the design (spacing/typography/colors), responsive.
 
 ---
 
