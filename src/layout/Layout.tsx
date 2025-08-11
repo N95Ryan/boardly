@@ -10,7 +10,7 @@ type LayoutProps = {
 // Content area is responsive and scrollable.
 export default function Layout({ children }: LayoutProps) {
   return (
-    <div className="flex min-h-screen w-full bg-white text-neutral-900 dark:bg-neutral-950 dark:text-neutral-100">
+    <div className="flex min-h-screen w-full bg-neutral-50 text-neutral-900">
       <Sidebar />
       <div className="flex min-w-0 flex-1 flex-col">
         <Navbar />

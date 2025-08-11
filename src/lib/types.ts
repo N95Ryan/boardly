@@ -2,6 +2,8 @@ export type Task = {
   id: string;
   title: string;
   description?: string;
+  comments?: number;
+  files?: number;
 };
 
 export type Column = {

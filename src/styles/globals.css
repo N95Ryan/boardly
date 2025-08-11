@@ -3,23 +3,23 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --brand: #635FC7; /* brand violet from Figma */
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-brand: var(--brand);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
+/* Force light theme for this project to match the design */
 
 body {
   background: var(--background);
   color: var(--foreground);
 }
+
+/* Smooth font rendering for a cleaner UI */
+html { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
 
 
