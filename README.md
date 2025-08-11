@@ -1,36 +1,118 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+## 🐼 Panda Dashboard
 
-## Getting Started
+Web application built for the Panda Hub technical test.
+Next.js dashboard with an interactive Kanban (drag-and-drop), responsive layout (Sidebar + Navbar), and simple, reusable UI components.
 
-First, run the development server:
+## 📋 Features
+
+- **Layout**: Sidebar, top navbar, and main content area
+- **Kanban**: Drag-and-drop across columns and in-column reordering
+- **State persistence**: Kanban state survives route changes via Zustand
+- **Mock data**: Initial dataset in `src/lib/data.ts`
+- **Stats component**: Simple metric cards in `src/dashboard/Stats.tsx`
+- **Pixel-perfect & Responsive**: Matches Figma design and adapts to various screen sizes
+- **Accessibility**: Semantic elements and ARIA attributes where needed
+
+## 🛠 Tech Stack
+
+- **Framework**: [Next.js](https://nextjs.org/) 15
+- **UI**: [React](https://react.dev/) 19 + [TailwindCSS](https://tailwindcss.com/) 4
+- **Language**: [TypeScript](https://www.typescriptlang.org/)
+- **State Management**: [Zustand](https://github.com/pmndrs/zustand)
+- **Drag & Drop**: [`@hello-pangea/dnd`](https://github.com/hello-pangea/dnd)
+- **Linting**: ESLint + Next.js config
+
+## 🚀 Getting Started
+
+### Prerequisites
+
+- Node.js 18+ (20+ recommended)
+- npm (or pnpm/yarn/bun)
+
+### Installation
+
+1. Clone the repository
+
+   ```bash
+   git clone <repository-url>
+   cd panda-dashboard
+   ```
+
+2. Install dependencies
+
+   ```bash
+   npm install
+   ```
+
+3. Start the development server
+
+   ```bash
+   npm run dev
+   ```
+
+4. Open the app
+   - Go to `http://localhost:3000`
+
+### Useful scripts
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm run dev    # Development
+npm run build  # Production build
+npm run start  # Start server (after build)
+npm run lint   # Lint the project
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 📁 Project Structure
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```
+src/
+├── dashboard/
+│   ├── KanbanBoard.tsx     # Main board + drag-and-drop orchestration
+│   ├── KanbanColumn.tsx    # Kanban column (Droppable)
+│   ├── KanbanCard.tsx      # Task card (Draggable)
+│   └── Stats.tsx           # Simple stats cards
+├── layout/
+│   ├── Layout.tsx          # App shell (Sidebar + Navbar + main)
+│   ├── Navbar.tsx          # Top navigation bar
+│   └── Sidebar.tsx         # Side navigation
+├── lib/
+│   ├── data.ts             # Initial Kanban data (mock)
+│   ├── kanbanStore.ts      # Zustand store (in-memory state)
+│   └── types.ts            # Interfaces/Types for the Kanban
+├── pages/
+│   ├── _app.tsx            # Next.js entry (Pages Router)
+│   ├── index.tsx           # Home (Dashboard + Kanban)
+│   ├── projects.tsx        # Projects page (example)
+│   └── settings.tsx        # Settings page (example)
+├── shared/
+│   ├── Button.tsx          # Reusable button
+│   └── Card.tsx            # Generic card component
+└── styles/
+    └── globals.css         # Tailwind global styles
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Architecture notes:
 
-## Learn More
+- **Absolute imports** from `src/` (configured via `tsconfig.json`).
+- **TailwindCSS** for all styling (no inline styles, no CSS Modules).
+- **Functional components** in TypeScript, small and single-responsibility.
 
-To learn more about Next.js, take a look at the following resources:
+## 🎯 Kanban Details
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- **Types**: Defined in `src/lib/types.ts` (e.g., `BoardData`, `Column`, `Task`).
+- **Data**: `src/lib/data.ts` exports `initialBoardData` for initial render.
+- **Store**: `src/lib/kanbanStore.ts` manages state via Zustand and exposes:
+  - `moveTask(taskId, fromColumnId, toColumnId, toIndex)` to move a task across columns
+  - `reorderTask(columnId, fromIndex, toIndex)` to reorder within a column
+- **Drag & Drop**: `src/dashboard/KanbanBoard.tsx` wires `onDragEnd` to call `moveTask` or `reorderTask` via `@hello-pangea/dnd`.
+- **Accessibility**: The board is rendered inside `<section aria-label="Kanban Board">` with semantic structure.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## ✅ Practices Followed
 
-## Deploy on Vercel
+- **Performance**: Targeted imports, simple components; minimal global state.
+- **Readability**: Descriptive names, clear separation of responsibilities.
+- **Design**: Tailwind-aligned; responsive; spacing/typography per Figma.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+---
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Built with ❤️ for Panda Hub.
