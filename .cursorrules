@@ -1,0 +1,57 @@
+# Cursor Rules for Panda Dashboard Project
+
+## Coding Style
+
+- Write all comments in **English**.
+- Keep the code **as simple, clear, and readable as possible**.
+- Use **functional components** with TypeScript.
+- Use **TailwindCSS** for all styling — no inline styles, no CSS modules.
+- Keep components **small** and **single-responsibility**.
+- Always match the **Figma design pixel-perfect** (spacing, font sizes, colors, layout).
+- Make sure the design is fully **responsive** on different screen sizes.
+- Avoid unnecessary complexity — this is a time-constrained technical test.
+
+## Project Architecture
+
+- Follow the provided folder structure exactly:
+  src/
+  components/
+  layout/
+  dashboard/
+  shared/
+  pages/
+  lib/
+  styles/
+- Use **absolute imports** from `src/` (configure `tsconfig.json` paths).
+
+## UI Implementation
+
+- Match **spacing, typography, and colors** from the Figma file exactly.
+- Keep the UI consistent with Tailwind’s utility classes.
+- Use semantic HTML elements where possible (e.g., `<header>`, `<main>`, `<section>`).
+- Ensure the UI is accessible (e.g., `alt` attributes for images, aria-labels when necessary).
+
+## Kanban Board Requirements
+
+- Implement drag-and-drop with `react-beautiful-dnd` or similar.
+- Keep Kanban state in memory using React context or a lightweight store like Zustand.
+- Maintain the state if the user navigates away and comes back.
+- Mock Kanban data in `lib/data.ts` using interfaces from `lib/types.ts`.
+
+## Comments and Documentation
+
+- Every non-trivial block of code should have a comment explaining its purpose.
+- Comments must explain **why** something is done, not just **what** is done.
+
+## Performance
+
+- Only import what is needed.
+- Avoid unnecessary re-renders (memoize if needed, but keep it simple for now).
+- Keep initial load fast — lazy-load heavy components if necessary.
+
+## General Notes
+
+- No experimental libraries unless approved by the requirements.
+- Always ensure the app compiles without errors or warnings before committing.
+- Prioritize readability over over-engineering.
+- Use descriptive variable and function names.
