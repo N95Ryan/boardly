@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -26,6 +26,8 @@ export default function Sidebar({
 }: SidebarProps) {
   const router = useRouter();
   const { pathname } = router;
+  // Controls the show/hide state of the "My Projects" list for better UX.
+  const [areProjectsOpen, setAreProjectsOpen] = useState(true);
   const isMobileActive =
     pathname === "/" ||
     pathname === "/mobile-app" ||
@@ -121,68 +123,81 @@ export default function Sidebar({
 
       {!isCollapsed && (
         <div className="mt-4 px-4">
-          <div className="mb-2 flex items-center justify-between text-xs text-neutral-500">
+          <button
+            type="button"
+            className="mb-2 flex w-full items-center justify-between text-xs text-neutral-500"
+            onClick={() => setAreProjectsOpen((prev) => !prev)}
+            aria-expanded={areProjectsOpen}
+            aria-controls="project-list"
+            title="Toggle projects list"
+          >
             <span>MY PROJECTS</span>
-            <ChevronRight className="h-3.5 w-3.5" />
-          </div>
-          <div className="space-y-1">
-            <Link
-              href="/mobile-app"
-              className={`flex items-center justify-between rounded-md px-3 py-2 text-sm ${
-                isMobileActive
-                  ? "text-neutral-900 ring-1 ring-neutral-200 hover:bg-neutral-50"
-                  : "text-neutral-700 hover:bg-neutral-100"
+            <ChevronRight
+              className={`h-3.5 w-3.5 transition-transform ${
+                areProjectsOpen ? "rotate-90" : "rotate-0"
               }`}
-              aria-current={isMobileActive ? "page" : undefined}
-            >
-              <span className="flex items-center gap-2">
-                <span className="h-2 w-2 rounded-full bg-[#7ac555]" /> Mobile
-                App
-              </span>
-            </Link>
-            <Link
-              href="/website-redesign"
-              className={`flex items-center justify-between rounded-md px-3 py-2 text-sm ${
-                isWebsiteActive
-                  ? "text-neutral-900 ring-1 ring-neutral-200 hover:bg-neutral-50"
-                  : "text-neutral-700 hover:bg-neutral-100"
-              }`}
-              aria-current={isWebsiteActive ? "page" : undefined}
-            >
-              <span className="flex items-center gap-2">
-                <span className="h-2 w-2 rounded-full bg-[#ffa500]" /> Website
-                Redesign
-              </span>
-            </Link>
-            <Link
-              href="/design-system"
-              className={`flex items-center justify-between rounded-md px-3 py-2 text-sm ${
-                isDesignActive
-                  ? "text-neutral-900 ring-1 ring-neutral-200 hover:bg-neutral-50"
-                  : "text-neutral-700 hover:bg-neutral-100"
-              }`}
-              aria-current={isDesignActive ? "page" : undefined}
-            >
-              <span className="flex items-center gap-2">
-                <span className="h-2 w-2 rounded-full bg-[#e4ccfd]" /> Design
-                System
-              </span>
-            </Link>
-            <Link
-              href="/wireframes"
-              className={`flex items-center justify-between rounded-md px-3 py-2 text-sm ${
-                isWireframesActive
-                  ? "text-neutral-900 ring-1 ring-neutral-200 hover:bg-neutral-50"
-                  : "text-neutral-700 hover:bg-neutral-100"
-              }`}
-              aria-current={isWireframesActive ? "page" : undefined}
-            >
-              <span className="flex items-center gap-2">
-                <span className="h-2 w-2 rounded-full bg-[#76a5ea]" />
-                Wireframes
-              </span>
-            </Link>
-          </div>
+            />
+          </button>
+          {areProjectsOpen && (
+            <div className="space-y-1" id="project-list">
+              <Link
+                href="/mobile-app"
+                className={`flex items-center justify-between rounded-md px-3 py-2 text-sm ${
+                  isMobileActive
+                    ? "text-neutral-900 ring-1 ring-neutral-200 hover:bg-neutral-50"
+                    : "text-neutral-700 hover:bg-neutral-100"
+                }`}
+                aria-current={isMobileActive ? "page" : undefined}
+              >
+                <span className="flex items-center gap-2">
+                  <span className="h-2 w-2 rounded-full bg-[#7ac555]" /> Mobile
+                  App
+                </span>
+              </Link>
+              <Link
+                href="/website-redesign"
+                className={`flex items-center justify-between rounded-md px-3 py-2 text-sm ${
+                  isWebsiteActive
+                    ? "text-neutral-900 ring-1 ring-neutral-200 hover:bg-neutral-50"
+                    : "text-neutral-700 hover:bg-neutral-100"
+                }`}
+                aria-current={isWebsiteActive ? "page" : undefined}
+              >
+                <span className="flex items-center gap-2">
+                  <span className="h-2 w-2 rounded-full bg-[#ffa500]" /> Website
+                  Redesign
+                </span>
+              </Link>
+              <Link
+                href="/design-system"
+                className={`flex items-center justify-between rounded-md px-3 py-2 text-sm ${
+                  isDesignActive
+                    ? "text-neutral-900 ring-1 ring-neutral-200 hover:bg-neutral-50"
+                    : "text-neutral-700 hover:bg-neutral-100"
+                }`}
+                aria-current={isDesignActive ? "page" : undefined}
+              >
+                <span className="flex items-center gap-2">
+                  <span className="h-2 w-2 rounded-full bg-[#e4ccfd]" /> Design
+                  System
+                </span>
+              </Link>
+              <Link
+                href="/wireframes"
+                className={`flex items-center justify-between rounded-md px-3 py-2 text-sm ${
+                  isWireframesActive
+                    ? "text-neutral-900 ring-1 ring-neutral-200 hover:bg-neutral-50"
+                    : "text-neutral-700 hover:bg-neutral-100"
+                }`}
+                aria-current={isWireframesActive ? "page" : undefined}
+              >
+                <span className="flex items-center gap-2">
+                  <span className="h-2 w-2 rounded-full bg-[#76a5ea]" />
+                  Wireframes
+                </span>
+              </Link>
+            </div>
+          )}
 
           <div className="mt-6 rounded-xl border border-neutral-200 bg-white p-4 text-center shadow-sm">
             <div className="mx-auto mb-3 flex h-10 w-10 items-center justify-center rounded-full bg-amber-100 text-amber-600">
