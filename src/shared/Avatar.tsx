@@ -1,10 +1,12 @@
 import React from "react";
 
+type AvatarSize = "sm" | "md" | "lg";
+
 type AvatarProps = {
   src?: string;
   alt?: string;
   initials?: string;
-  size?: number;
+  size?: AvatarSize;
   className?: string;
 };
 
@@ -13,14 +15,14 @@ export default function Avatar({
   src,
   alt = "",
   initials,
-  size = 32,
+  size = "md",
   className = "",
 }: AvatarProps) {
-  const dimension = `${size}px`;
+  const sizeClass =
+    size === "sm" ? "h-7 w-7" : size === "lg" ? "h-10 w-10" : "h-8 w-8";
   return (
     <div
-      className={`inline-flex items-center justify-center overflow-hidden rounded-full bg-neutral-200 text-neutral-700 dark:bg-neutral-800 dark:text-neutral-300 ${className}`}
-      style={{ width: dimension, height: dimension }}
+      className={`inline-flex items-center justify-center overflow-hidden rounded-full bg-neutral-200 text-neutral-700 dark:bg-neutral-800 dark:text-neutral-300 ${sizeClass} ${className}`}
       aria-label={alt}
     >
       {src ? (

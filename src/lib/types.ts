@@ -16,4 +16,6 @@ export type BoardData = {
   columns: Column[];
 };
 
+export type ProjectKey = 'mobile-app' | 'website-redesign' | 'design-system' | 'wireframes';
+
 

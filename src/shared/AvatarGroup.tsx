@@ -3,7 +3,7 @@ import Avatar from "@/shared/Avatar";
 
 type AvatarGroupProps = {
   users: Array<{ id: string; src?: string; initials?: string; alt?: string }>;
-  size?: number;
+  size?: "sm" | "md" | "lg";
   max?: number;
 };
 

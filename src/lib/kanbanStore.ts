@@ -1,9 +1,11 @@
 import { create } from 'zustand';
-import { BoardData } from '@/lib/types';
-import { initialBoardData } from '@/lib/data';
+import { BoardData, ProjectKey } from '@/lib/types';
+import { initialBoardData, initialProjectBoards } from '@/lib/data';
+import { fetchBoardDataFromDummyJSON } from '@/lib/dummyjson';
 
 type KanbanState = {
   board: BoardData;
+  currentProject: ProjectKey;
   moveTask: (taskId: string, fromColumnId: string, toColumnId: string, toIndex: number) => void;
   reorderTask: (columnId: string, fromIndex: number, toIndex: number) => void;
   /**
@@ -12,16 +14,59 @@ type KanbanState = {
    */
   statusFilter: 'all' | 'todo' | 'in-progress' | 'done';
   setStatusFilter: (filter: KanbanState['statusFilter']) => void;
+  /**
+   * Network-related state to hydrate the board from DummyJSON once per session.
+   */
+  isLoadingFromAPI: boolean;
+  hasHydratedFromAPI: boolean;
+  error: string | null;
+  loadFromDummyJSON: () => Promise<void>;
+  switchProject: (project: ProjectKey) => void;
 };
 
 // In-memory store for Kanban board. The state survives route navigation
 // because Zustand stores state at the module level and does not reset
 // across client-side page transitions.
-export const useKanbanStore = create<KanbanState>((set) => ({
+export const useKanbanStore = create<KanbanState>((set, get) => ({
   board: initialBoardData,
+  currentProject: 'mobile-app',
   // Keep the active filter in the store so it persists across navigation
   statusFilter: 'all',
   setStatusFilter: (filter) => set({ statusFilter: filter }),
+  isLoadingFromAPI: false,
+  hasHydratedFromAPI: false,
+  error: null,
+  /**
+   * Hydrates the board from DummyJSON once. Falls back to local mock data on failure.
+   */
+  loadFromDummyJSON: async () => {
+    const { hasHydratedFromAPI, isLoadingFromAPI } = get();
+    if (hasHydratedFromAPI || isLoadingFromAPI) return;
+    set({ isLoadingFromAPI: true, error: null });
+    try {
+      const remote = await fetchBoardDataFromDummyJSON();
+      set({ board: remote, hasHydratedFromAPI: true, isLoadingFromAPI: false });
+    } catch (err) {
+      // Keep local data and expose a minimal error string for potential UI hooks
+      const message = err instanceof Error ? err.message : 'Unknown error';
+      set({ error: message, isLoadingFromAPI: false, hasHydratedFromAPI: false });
+    }
+  },
+  /**
+   * Switch between projects. Resets filters and hydrates from local seeds first.
+   * Optionally re-hydrate from API if desired (kept simple for now).
+   */
+  switchProject: (project) => {
+    const seed = initialProjectBoards[project] ?? initialBoardData;
+    set({
+      currentProject: project,
+      board: seed,
+      statusFilter: 'all',
+      // Reset API hydration for a fresh experience per project
+      hasHydratedFromAPI: false,
+      error: null,
+    });
+  },
   moveTask: (taskId, fromColumnId, toColumnId, toIndex) =>
     set((state) => {
       const boardCopy: BoardData = {

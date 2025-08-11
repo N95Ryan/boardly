@@ -62,7 +62,7 @@ export default function Navbar({ onOpenSidebar }: NavbarProps) {
               </p>
               <p className="text-xs text-neutral-500">QC, Canada</p>
             </div>
-            <Avatar initials="RS" size={32} />
+            <Avatar initials="RS" size="md" />
           </div>
         </nav>
       </div>
