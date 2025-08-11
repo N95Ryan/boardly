@@ -1,8 +1,9 @@
 import React from "react";
-import { Search, Bell, CalendarCheck2, CircleHelp } from "lucide-react";
+import { Bell, CalendarCheck2, CircleHelp } from "lucide-react";
 import Avatar from "@/shared/Avatar";
 import Image from "next/image";
 import flyOutIcon from "@/assets/flyOutButton.png";
+import SearchBar from "@/shared/SearchBar";
 
 type NavbarProps = {
   onOpenSidebar?: () => void;
@@ -30,14 +31,10 @@ export default function Navbar({ onOpenSidebar }: NavbarProps) {
               className="transform scale-x-[-1]"
             />
           </button>
-          <div className="hidden w-72 items-center gap-2 rounded-full border border-neutral-200 bg-white px-3 py-2 text-sm text-neutral-500 ring-1 ring-transparent focus-within:ring-neutral-300 md:flex">
-            <Search className="h-4 w-4" />
-            <input
-              placeholder="Search for anything..."
-              aria-label="Search"
-              className="w-full bg-transparent outline-none placeholder:text-neutral-400"
-            />
-          </div>
+          <SearchBar
+            placeholder="Search for anything..."
+            className="hidden md:flex w-[460px] max-w-[60vw]"
+          />
         </div>
         <nav className="flex items-center gap-2 md:gap-3">
           <button
@@ -61,11 +58,11 @@ export default function Navbar({ onOpenSidebar }: NavbarProps) {
           <div className="ml-1 flex items-center gap-2 pl-2">
             <div className="text-right">
               <p className="text-sm font-medium leading-4 text-neutral-900">
-                Anima Agrawal
+                Ryan PINA-SILASSE
               </p>
-              <p className="text-xs text-neutral-500">U.P, India</p>
+              <p className="text-xs text-neutral-500">QC, Canada</p>
             </div>
-            <Avatar initials="AA" size={32} />
+            <Avatar initials="RS" size={32} />
           </div>
         </nav>
       </div>

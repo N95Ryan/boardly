@@ -1,5 +1,6 @@
 import React from "react";
 import { Droppable } from "@hello-pangea/dnd";
+import { Plus } from "lucide-react";
 import { Column } from "@/lib/types";
 import KanbanCard from "@/dashboard/KanbanCard";
 
@@ -21,13 +22,25 @@ export default function KanbanColumn({ column }: KanbanColumnProps) {
 
   return (
     <div className="w-80 shrink-0">
-      <div className="mb-3 flex items-center justify-between">
-        <h3 className="flex items-center gap-2 text-sm font-semibold tracking-tight text-neutral-800">
-          <span className={`h-1.5 w-1.5 rounded-full ${accentDotClass}`} />
-          {column.title}
-        </h3>
-        <span className="text-xs text-neutral-500">{column.tasks.length}</span>
+      <div className="mb-2 flex items-center justify-between">
+        <div className="flex items-center gap-2">
+          <span className={`h-2 w-2 rounded-full ${accentDotClass}`} />
+          <h3 className="text-sm font-semibold tracking-tight text-neutral-900">
+            {column.title}
+          </h3>
+          <span className="rounded-full bg-neutral-100 px-2 py-0.5 text-xs font-medium text-neutral-600">
+            {column.tasks.length}
+          </span>
+        </div>
+        <button
+          type="button"
+          aria-label="Add task"
+          className="inline-flex h-6 w-6 items-center justify-center rounded-full bg-violet-50 text-[var(--brand)] ring-1 ring-violet-200 hover:bg-violet-100"
+        >
+          <Plus className="h-3.5 w-3.5" />
+        </button>
       </div>
+      <div className={`mb-3 h-1 rounded-full ${accentBarClass}`} />
       <Droppable droppableId={column.id} type="TASK">
         {(provided, snapshot) => (
           <div
@@ -39,9 +52,6 @@ export default function KanbanColumn({ column }: KanbanColumnProps) {
                 : "border-neutral-200"
             } bg-[#F5F5F5]`}
           >
-            <div
-              className={`mb-2 h-1.5 w-full rounded-full ${accentBarClass}`}
-            />
             {column.tasks.map((task, index) => (
               <KanbanCard key={task.id} task={task} index={index} />
             ))}

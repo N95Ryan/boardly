@@ -17,7 +17,7 @@ export default function AvatarGroup({
   const remaining = users.length - visible.length;
   return (
     <div className="flex items-center">
-      <div className="flex -space-x-2">
+      <div className="flex space-x-2">
         {visible.map((u) => (
           <Avatar
             key={u.id}
@@ -30,7 +30,12 @@ export default function AvatarGroup({
         ))}
       </div>
       {remaining > 0 && (
-        <span className="ml-2 text-xs text-neutral-500">+{remaining}</span>
+        <span
+          className="ml-2 inline-flex h-7 w-7 items-center justify-center rounded-full bg-rose-100 text-xs font-medium text-rose-600 ring-2 ring-white dark:ring-neutral-950"
+          aria-label={`+${remaining} more`}
+        >
+          +{remaining}
+        </span>
       )}
     </div>
   );

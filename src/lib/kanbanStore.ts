@@ -6,6 +6,12 @@ type KanbanState = {
   board: BoardData;
   moveTask: (taskId: string, fromColumnId: string, toColumnId: string, toIndex: number) => void;
   reorderTask: (columnId: string, fromIndex: number, toIndex: number) => void;
+  /**
+   * UI-level filter that controls which tasks/columns are visible by status.
+   * Using the column ids as the status keys keeps things simple and aligned with data.
+   */
+  statusFilter: 'all' | 'todo' | 'in-progress' | 'done';
+  setStatusFilter: (filter: KanbanState['statusFilter']) => void;
 };
 
 // In-memory store for Kanban board. The state survives route navigation
@@ -13,6 +19,9 @@ type KanbanState = {
 // across client-side page transitions.
 export const useKanbanStore = create<KanbanState>((set) => ({
   board: initialBoardData,
+  // Keep the active filter in the store so it persists across navigation
+  statusFilter: 'all',
+  setStatusFilter: (filter) => set({ statusFilter: filter }),
   moveTask: (taskId, fromColumnId, toColumnId, toIndex) =>
     set((state) => {
       const boardCopy: BoardData = {
