@@ -1,4 +1,5 @@
 import React from "react";
+import { useState } from "react";
 import Sidebar from "@/layout/Sidebar";
 import Navbar from "@/layout/Navbar";
 
@@ -9,11 +10,20 @@ type LayoutProps = {
 // App-wide layout combining the top navbar and the left sidebar.
 // Content area is responsive and scrollable.
 export default function Layout({ children }: LayoutProps) {
+  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
+
+  function handleToggleSidebar(): void {
+    setIsSidebarCollapsed((prev) => !prev);
+  }
+
   return (
     <div className="flex min-h-screen w-full bg-neutral-50 text-neutral-900">
-      <Sidebar />
+      <Sidebar
+        isCollapsed={isSidebarCollapsed}
+        onToggleCollapse={handleToggleSidebar}
+      />
       <div className="flex min-w-0 flex-1 flex-col">
-        <Navbar />
+        <Navbar onOpenSidebar={() => setIsSidebarCollapsed(false)} />
         <main className="mx-auto w-full max-w-7xl flex-1 px-4 py-6 md:px-6 lg:px-8">
           {children}
         </main>
