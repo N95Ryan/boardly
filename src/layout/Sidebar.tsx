@@ -60,7 +60,7 @@ export default function Sidebar({
               className="h-5 w-5"
             />
             <span className="text-base font-semibold text-neutral-900">
-              Project M.
+              Boardly
             </span>
           </div>
         )}
@@ -85,35 +85,45 @@ export default function Sidebar({
         <nav className="flex flex-col gap-1 px-2 py-2 text-sm">
           <button
             type="button"
-            className={`flex items-center rounded-md px-3 py-2 text-neutral-700 hover:bg-neutral-100 ${isCollapsed ? "justify-center" : "gap-2"}`}
+            className={`flex items-center rounded-md px-3 py-2 text-neutral-700 hover:bg-neutral-100 ${
+              isCollapsed ? "justify-center" : "gap-2"
+            }`}
           >
             <Home className="h-4 w-4" />
             <span className={isCollapsed ? "hidden" : "inline"}>Home</span>
           </button>
           <button
             type="button"
-            className={`flex items-center rounded-md px-3 py-2 text-neutral-700 hover:bg-neutral-100 ${isCollapsed ? "justify-center" : "gap-2"}`}
+            className={`flex items-center rounded-md px-3 py-2 text-neutral-700 hover:bg-neutral-100 ${
+              isCollapsed ? "justify-center" : "gap-2"
+            }`}
           >
             <MessageSquare className="h-4 w-4" />
             <span className={isCollapsed ? "hidden" : "inline"}>Messages</span>
           </button>
           <button
             type="button"
-            className={`flex items-center rounded-md px-3 py-2 text-neutral-700 hover:bg-neutral-100 ${isCollapsed ? "justify-center" : "gap-2"}`}
+            className={`flex items-center rounded-md px-3 py-2 text-neutral-700 hover:bg-neutral-100 ${
+              isCollapsed ? "justify-center" : "gap-2"
+            }`}
           >
             <ListTodo className="h-4 w-4" />
             <span className={isCollapsed ? "hidden" : "inline"}>Tasks</span>
           </button>
           <button
             type="button"
-            className={`flex items-center rounded-md px-3 py-2 text-neutral-700 hover:bg-neutral-100 ${isCollapsed ? "justify-center" : "gap-2"}`}
+            className={`flex items-center rounded-md px-3 py-2 text-neutral-700 hover:bg-neutral-100 ${
+              isCollapsed ? "justify-center" : "gap-2"
+            }`}
           >
             <Users2 className="h-4 w-4" />
             <span className={isCollapsed ? "hidden" : "inline"}>Members</span>
           </button>
           <button
             type="button"
-            className={`flex items-center rounded-md px-3 py-2 text-neutral-700 hover:bg-neutral-100 ${isCollapsed ? "justify-center" : "gap-2"}`}
+            className={`flex items-center rounded-md px-3 py-2 text-neutral-700 hover:bg-neutral-100 ${
+              isCollapsed ? "justify-center" : "gap-2"
+            }`}
           >
             <Settings className="h-4 w-4" />
             <span className={isCollapsed ? "hidden" : "inline"}>Settings</span>

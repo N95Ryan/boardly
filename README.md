@@ -1,6 +1,6 @@
-## 🐼 Panda Dashboard
+## 📋 Boardly
 
-Next.js web application (Pages Router) built for the Panda Hub technical test.
+Next.js web application (Pages Router) built for Boardly project management.
 Dashboard with an interactive Kanban (drag-and-drop), responsive layout (Sidebar + Navbar), and reusable UI components.
 
 ## 📋 Features
@@ -37,7 +37,7 @@ Dashboard with an interactive Kanban (drag-and-drop), responsive layout (Sidebar
 
 ```bash
 git clone <repository-url>
-cd panda-dashboard
+cd boardly
 ```
 
 2. Install dependencies
@@ -96,35 +96,3 @@ src/
 └── styles/
     └── globals.css         # Tailwind global styles
 ```
-
-Architecture notes:
-
-- **Absolute imports** from `src/` (configured via `tsconfig.json`).
-- **TailwindCSS** for all styling (no inline styles / CSS Modules).
-- **Functional components** in TypeScript, small and single-responsibility.
-
-## 🎯 Kanban Details
-
-- **Types**: `src/lib/types.ts` (`BoardData`, `Column`, `Task`, etc.).
-- **Data**: `initialBoardData` in `src/lib/data.ts`.
-- **Store**: `src/lib/kanbanStore.ts` exposes:
-  - `moveTask(taskId, fromColumnId, toColumnId, toIndex)`
-  - `reorderTask(columnId, fromIndex, toIndex)`
-  - `loadFromDummyJSON()` (remote hydration, with participants)
-  - `switchProject(projectKey)` and `statusFilter` (+ `setStatusFilter`)
-- **Drag & Drop**: integrated in `src/dashboard/KanbanBoard.tsx` using `@hello-pangea/dnd`.
-
-## 🧭 Project Navigation
-
-- Directly access: `/mobile-app`, `/website-redesign`, `/design-system`, `/wireframes`.
-- The sidebar contains links and the Kanban state persists between pages.
-
-## 🧩 Practices
-
-- **Readability**: descriptive names, simple components, clear responsibilities.
-- **Performance**: targeted imports, avoid unnecessary re-renders.
-- **Design**: matches the design (spacing/typography/colors), responsive.
-
----
-
-Built with ❤️ for Panda Hub.

@@ -67,7 +67,7 @@ export default function ProjectPage() {
   return (
     <>
       <Head>
-        <title>Panda Dashboard - {title}</title>
+        <title>Boardly - {title}</title>
       </Head>
       <Layout>
         <section className="mb-6">
@@ -148,10 +148,10 @@ export default function ProjectPage() {
                               opt.key === "todo"
                                 ? "bg-[var(--brand)]"
                                 : opt.key === "in-progress"
-                                  ? "bg-amber-400"
-                                  : opt.key === "done"
-                                    ? "bg-emerald-500"
-                                    : "bg-neutral-300"
+                                ? "bg-amber-400"
+                                : opt.key === "done"
+                                ? "bg-emerald-500"
+                                : "bg-neutral-300"
                             }`}
                             aria-hidden="true"
                           />

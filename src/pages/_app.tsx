@@ -13,8 +13,8 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <>
       <Head>
-        <title>Panda Hub - Dashboard</title>
-        <meta name="description" content="PandaHub - Dashboard" />
+        <title>Boardly - Dashboard</title>
+        <meta name="description" content="Boardly - Dashboard" />
       </Head>
       <main className={inter.className}>
         <Component {...pageProps} />
